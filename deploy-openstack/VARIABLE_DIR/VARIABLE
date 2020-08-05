@@ -1,0 +1,147 @@
+#!/bin/bash 
+#variable for all script 
+#modify by keanlee on June 4th of 2017
+
+#----------------Edit the below variable to adapt your Env---------
+
+###########################################################################################################
+#
+#
+#---------------Please Follow The Example To List The Ip Address#############Must change 
+#
+#
+###########################################################################################################
+#The  hostname will be show as product_name-nodeX-controller/compute/network/block,such as OpenStack-node1-controller1
+PRODUCT_NAME=OpenStack
+
+###like base update extras repo if or not use the default by os
+OS_REPO_USE_DEFAULT=true
+
+#--------------------the admin password for the dashboard 
+ADMIN_PASS=adminpass
+#openstack componment here
+#default
+#if deploy cinder 
+if_enable_cinder=no
+#if deploy heat 
+if_enable_heat=yes
+
+#--------------------controller node's ip list here -------------------
+#galera node's ip list here,for HA mode just support 3 nodes controller deploy 
+#if nework ip same as the controller ip ,deployer will be deploy controller node as network node
+CONTROLLER_IP=(
+)
+
+
+#------------------Compute node ip list  here -----------------------------
+#if nework ip same as the compute ip, deployer will be deploy compute node as network node
+#if block node's ip same as the compute ip, deployer will be deploy compute node as block node
+COMPUTE_NODE_IP=(
+
+)
+
+
+#-----------------Network node ip list here -------------------------------
+# Sigle network list here 
+#if nework ip same as the controller ip ,deployer will be deploy controller node as network node
+NETWORK_NODE_IP=(
+
+)
+
+#------------------Block node ip list here --------
+#if block node's ip same as the compute ip, deployer will be deploy compute node as block node
+BLOCK_NODE_IP=(
+
+)
+
+#Management Network Card Name, both controller and all slave node (compute ,block ,network nodes) use this name for configuration 
+#This interface use for openstack Management and api network 
+MGMT_IP_DEVICE=
+
+
+#Private Metwork interface, The E/W network traffic 
+#you can use MGMT_IP_DEVICE if your reouce is not enough
+#This device need with ip address 
+PRIVATE_IP_DEVICE=
+
+#Public network here: The N/S network traffic
+#Add a port to the external bridge that connects to the physical external network inter-face
+#Replace PROVIDER_INTERFACE with the name of the underlying interface that handles provider networks. For example, eth1
+PROVIDER_INTERFACE=
+
+
+#The VIP use for all slave node , HA also use this Virtual Ip Address
+#The vip must be a network segment with controller's ip
+#For no controller ha mode,please list it as blank
+CONTROLLER_VIP=
+
+#The cidr postfix of controller vip,must same as the all controller ip's cidr,for example 24  
+CIDR_POSTFIX=
+
+
+
+#NTP server IP
+NTP_SERVER_IP=182.92.12.11
+
+
+#-----------PASSWORD FOR EACH NODE ----Note:Make sure all node as same password 
+#For Controller Compute node.Make the ssh-key for each node
+PASSWORD_EACH_NODE=
+
+#BLOCK-NODE ONLY---
+#Note:  just support one disk on each block node right now 
+PARTITION=(
+vdb
+)
+
+#set the dns server ip here 
+DNS_SERVER=114.114.114.114
+
+
+#---------------------------------------Glance Images store HA Option ---------------------
+#option: glusterfs,ceph.  Default: No Value  glance will be use local stroage as image store if no value set  
+GLANCE_STORAGE_HA=ceph
+
+#For ceph only,list the pool and user which will be use by glance on ceph  
+RDB_STORE_GLANCE_POOL=paas-images
+RDB_STORE_GLANCE_USER=admin
+
+
+#Do you want to use glusterfs as glance store image ?   (yes/no)       --------------------
+#This will be use for gluster fs as share disk                   --------------------------
+GLUSTERFS_USE_DISK=vdb
+
+
+#----------------------------nova instance store ha option --------------------------
+#if the value is empty,nova will use local storage to store the instance image 
+#the value can support ceph now 
+NOVA_STOREAGE_HA=ceph
+
+RDB_STORE_NOVA_POOL=paas-compute
+RDB_STORE_NOVA_USER=admin
+
+#Do you want to enable DVR funcation, only support yes or no
+IF_ENABLE_NEUTRON_HA_DVR=yes
+DHCP_AGENT_NUMBER=3
+
+#which tenant_network_types you want to use default will use vxlan? this script support flat, vlan, vxlan now 
+TENANT_NETWORK_TYPES=vxlan 	
+
+#----------------------------------------------------------------------------
+#--------------external network create -------------
+#--------list blank if you want to set the floating up manual 
+#-------Floating ip here:
+EXTERNAL_NETWORK_CIDR=
+FLOATING_IP_START=
+FLOATING_IP_END=
+EXTERNAL_NETWORK_GATEWAY=
+
+#Do you want to enable ssh key for root user on each compute? that means you can ssh with root to each compute without password(support value:yes/no) when you at one of them 
+ROOT_SSH_COMPUTE=yes
+
+#Which directory you want to store the admin-openrc file ?
+OPENRC_DIR=/root
+
+#list controller host name,for galera cluster that must list the hostname here (note: no need type here,this will auto fill out after check nodes info)  
+#CONTROLLER-HOSTNAME-HERE
+
